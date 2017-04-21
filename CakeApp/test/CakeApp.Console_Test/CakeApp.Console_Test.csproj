@@ -11,7 +11,7 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\CoreApp.Console\CoreApp.Console.csproj">
+    <ProjectReference Include="..\..\src\CakeApp.Console\CakeApp.Console.csproj">
       <Project>{b9b63d5d-cdfd-418d-b89c-8e14bd248ec5}</Project>
       <Name>CoreApp.Console</Name>
     </ProjectReference>

@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace CoreApp.Console_Test
+namespace CakeApp.Console_Test
 {
     public class UnitTest1
     {

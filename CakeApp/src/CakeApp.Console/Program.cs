@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CoreApp.Console
+namespace CakeApp.Console
 {
     class Program
     {
