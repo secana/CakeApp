@@ -72,6 +72,14 @@ or just `build.sh` to run the default target `test`.
 | Publish | Publishes all projects from *src* to the *artifacts* folder. You can use the published projects to run them every where else. | Clean, Test |
 | Default | The same as *Test*. If no target is given, this one is used. | Clean, Build |
 
+### Dockerize the application
+You may have noticed the *Dockerfile* that was created in your solution. It will use your *CakeApp.Console* application from the *src* folder as the starting point of a Docker app if you build an image with it.
 
+To build an Docker image containing your application type:
+```
+build.sh --target publish
+docker build -t cakeapp .
+```
+This will create an image in your local Docker registry called *cakeapp*. You can run it with `docker run cakepp`
 
 
