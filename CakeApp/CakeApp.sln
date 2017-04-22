@@ -1,15 +1,24 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{749B1421-3177-4C7A-A66B-541BD4E925B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CakeApp.Console", "src\CakeApp.Console\CakeApp.Console.csproj", "{60B508F8-5EF1-43A4-8965-4AD2E178C710}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CakeApp.Console", "src\CakeApp.Console\CakeApp.Console.csproj", "{60B508F8-5EF1-43A4-8965-4AD2E178C710}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{ADD2EBBA-A839-4E4A-9253-CDE29A372F07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CakeApp.Console_Test", "test\CakeApp.Console_Test\CakeApp.Console_Test.csproj", "{D12645A3-2E8E-4A42-8B16-427743877DF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CakeApp.Console_Test", "test\CakeApp.Console_Test\CakeApp.Console_Test.csproj", "{D12645A3-2E8E-4A42-8B16-427743877DF1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C8804689-D33A-45CC-B025-2854D37A2D14}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		build.cake = build.cake
+		build.ps1 = build.ps1
+		build.sh = build.sh
+		docker.sh = docker.sh
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,34 +29,34 @@ Global
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Debug|x64.ActiveCfg = Debug|x64
-		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Debug|x64.Build.0 = Debug|x64
-		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Debug|x86.ActiveCfg = Debug|x86
-		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Debug|x86.Build.0 = Debug|x86
+		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Debug|x64.Build.0 = Debug|Any CPU
+		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Debug|x86.Build.0 = Debug|Any CPU
 		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Release|Any CPU.Build.0 = Release|Any CPU
-		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Release|x64.ActiveCfg = Release|x64
-		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Release|x64.Build.0 = Release|x64
-		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Release|x86.ActiveCfg = Release|x86
-		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Release|x86.Build.0 = Release|x86
+		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Release|x64.ActiveCfg = Release|Any CPU
+		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Release|x64.Build.0 = Release|Any CPU
+		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Release|x86.ActiveCfg = Release|Any CPU
+		{60B508F8-5EF1-43A4-8965-4AD2E178C710}.Release|x86.Build.0 = Release|Any CPU
 		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Debug|x64.ActiveCfg = Debug|x64
-		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Debug|x64.Build.0 = Debug|x64
-		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Debug|x86.ActiveCfg = Debug|x86
-		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Debug|x86.Build.0 = Debug|x86
+		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Debug|x64.Build.0 = Debug|Any CPU
+		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Debug|x86.Build.0 = Debug|Any CPU
 		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Release|x64.ActiveCfg = Release|x64
-		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Release|x64.Build.0 = Release|x64
-		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Release|x86.ActiveCfg = Release|x86
-		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Release|x86.Build.0 = Release|x86
+		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Release|x64.ActiveCfg = Release|Any CPU
+		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Release|x64.Build.0 = Release|Any CPU
+		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Release|x86.ActiveCfg = Release|Any CPU
+		{D12645A3-2E8E-4A42-8B16-427743877DF1}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{60B508F8-5EF1-43A4-8965-4AD2E178C710} = {749B1421-3177-4C7A-A66B-541BD4E925B0}
