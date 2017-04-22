@@ -58,8 +58,11 @@ To run a build on the PowerShell type:
 or just `build.ps1` to run the default target `test`.
 
 On Linux run:
-`build.sh --target [target name]`
-or just `build.sh` to run the default target `test`.
+```
+dos2unix build.sh
+build.sh --target [target name]
+```
+or just `build.sh` to run the default target `test`. The *dos2unix* command is needed since Windows changes the line endings in the bash script when the NuGet package is created. You have to to the command only once.
 
 | Build Target | Description | Depends on |
 | ------------ | ----------- | ---------- |
