@@ -10,6 +10,7 @@ This template creates the following structure on your disk, where *CakeApp* is r
 |   |-> CakeApp.Console
 |   |   |-> CakeApp.Console.csproj
 |   |   |-> Program.cs
+|   |   |-> appsettings.json
 |-> test
 |   |-> CakeApp.Console_Test
 |   |   |-> CakeApp.Console_Test.csproj
