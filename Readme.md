@@ -80,6 +80,6 @@ To build an Docker image containing your application type:
 build.sh --target publish
 docker build -t cakeapp .
 ```
-This will create an image in your local Docker registry called *cakeapp*. You can run it with `docker run cakepp`
+This will create an image in your local Docker registry called *cakeapp*. You can run it with `docker run cakeapp`
 
 
