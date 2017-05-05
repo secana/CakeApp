@@ -24,12 +24,10 @@ Task("Clean")
 		var binDirs = GetDirectories("./**/bin");
 		var objDirs = GetDirectories("./**/obj");
 		var testResDirs = GetDirectories("./**/TestResults");
-		var porperties = GetDirectories("./**/Properties");
 		
 		DeleteDirectories(binDirs, true);
 		DeleteDirectories(objDirs, true);
 		DeleteDirectories(testResDirs, true);
-		DeleteDirectories(porperties, true);
 	});
 
 Task("Restore")
@@ -84,7 +82,7 @@ Task("Test")
 	.ContinueOnError()
 	.Does(() =>
 	{
-		var tests = GetFiles("./test/**/*_Test/*.csproj");
+		var tests = GetFiles("./test/**/*Test/*.csproj");
 		
 		foreach(var test in tests)
 		{
