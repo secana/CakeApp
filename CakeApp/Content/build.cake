@@ -33,32 +33,7 @@ Task("Clean")
 Task("Restore")
 	.Does(() =>
 	{
-		Exception exception = null;
-		
-		// We have to retry the restore a few
-		// times since on docker it does not work 
-		// on the first time :(
-
-		for(var i = 0; i < 5; i++)
-		{
-			try
-			{
-				exception = null;
-				DotNetCoreRestore();	  
-			}
-			catch(Exception e)
-			{
-				exception = e;
-				continue;
-			}
-
-			break;
-		}
-
-		if(exception != null)
-		{
-			throw exception;
-		}		
+		DotNetCoreRestore();	  
 	});
 
 Task("Build")
