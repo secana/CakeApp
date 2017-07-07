@@ -23,7 +23,7 @@ Task("Clean")
 
 		var binDirs = GetDirectories("./**/bin");
 		var objDirs = GetDirectories("./**/obj");
-		var testResDirs = GetDirectories("./**/TestResults");
+		var testResDirs = GetDirectories("./**/test-results");
 		
 		DeleteDirectories(binDirs, true);
 		DeleteDirectories(objDirs, true);
