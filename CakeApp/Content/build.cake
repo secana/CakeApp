@@ -1,7 +1,7 @@
 var target = Argument("target", "Default");
 var testFailed = false;
 var solutionDir = System.IO.Directory.GetCurrentDirectory();
-var testResultDir = System.IO.Path.Combine(solutionDir, "test-results");
+var testResultDir = System.IO.Path.Combine(solutionDir, "testResults");
 var artifactDir = "./artifacts";
 
 Information("Solution Directory: {0}", solutionDir);

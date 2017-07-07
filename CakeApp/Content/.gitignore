@@ -9,7 +9,7 @@ v14/
 tools/
 artifacts/
 test-results/
-TestResults/
+testResults/
 *.trx
 .vscode
 .rider
