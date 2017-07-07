@@ -59,6 +59,12 @@ Task("Test")
 	{
 		var tests = GetFiles("./test/**/*Test/*.csproj");
 		
+		if(tests.Count == 0)
+		{
+			Information("Found no test projects");
+			return;
+		}
+		
 		foreach(var test in tests)
 		{
 			var projectFolder = System.IO.Path.GetDirectoryName(test.FullPath);
