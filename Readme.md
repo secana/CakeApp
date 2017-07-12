@@ -20,7 +20,6 @@ This template creates the following structure on your disk, where *CakeApp* is r
 |-> build.ps1
 |-> build.sh
 |-> Dockerfile
-|-> docker.sh
 |-> Readme.md
 ```
 
@@ -73,16 +72,7 @@ or just `build.sh` to run the default target `test`. The *dos2unix* command is n
 | Test | Runs all Unit test projects in the *test* folder which project names are ending with **Test*. Other projects are ignored. The test results **.trx* files are put into the *testResults* folder. | Clean, Build | 
 | Pack | Packages all projects from the *src* folder into corresponding NuGet packages. The packages are placed in the *artifacts* folder. | Clean, Test |
 | Publish | Publishes all projects from *src* to the *artifacts* folder. You can use the published projects to run them every where else. | Clean, Test |
+| Build-Container | Builds a Docker container with the main application and tags the container based on the \"Version\" tag in the *.csproj file and a given build number (default 0). Futhermore the container gets a \"latest\" tag. | publish |
+| Push-Container | Pushes the two container tags (version and latest) into a Docker registry which you have to specify. | Build-Container |
 | Default | The same as *Test*. If no target is given, this one is used. | Clean, Build |
-
-### Dockerize the application
-You may have noticed the *Dockerfile* that was created in your solution. It will use your *CakeApp.Console* application from the *src* folder as the starting point of a Docker app if you build an image with it.
-
-To build an Docker image containing your application type:
-```
-build.sh --target publish
-docker build -t cakeapp .
-```
-This will create an image in your local Docker registry called *cakeapp*. You can run it with `docker run cakeapp`
-
 
