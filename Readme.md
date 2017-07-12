@@ -76,3 +76,6 @@ or just `build.sh` to run the default target `test`. The *dos2unix* command is n
 | Push-Container | Pushes the two container tags (version and latest) into a Docker registry which you have to specify. | Build-Container |
 | Default | The same as *Test*. If no target is given, this one is used. | Clean, Build |
 
+## Build the project
+To build a usable NuGet package from the template source run:
+`nuget pack -NoDefaultExcludes .\CakeApp.1.1.0.nuspec` from a Windows machine.
