@@ -6,10 +6,14 @@
 # Define directories.
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 TOOLS_DIR=$SCRIPT_DIR/tools
-CAKE_VERSION=0.19.4
+CAKE_VERSION=0.20.0
 CAKE_FOLDER=$TOOLS_DIR/Cake.CoreCLR/$CAKE_VERSION/
 CAKE_DLL=$CAKE_FOLDER/Cake.dll
+ADDIN_PATH=$TOOLS_DIR/Addins
 
+DOCKER_ADDIN_URI="https://www.nuget.org/api/v2/package/Cake.Docker/0.7.7"
+DOCKER_ADDIN_PATH=$ADDIN_PATH/Core.Docker/lib/netstandard1.6/Cake.Docker.dll
+DOCKER_NUPGK=$ADDIN_PATH/Cake.Docker.nupkg
 
 # Define default arguments.
 TARGET="Default"
@@ -53,14 +57,6 @@ dotnet --info
 ###########################################################################
 
 if [ ! -f "$CAKE_DLL" ]; then
-    # if [ ! -f "$TOOLS_DIR/project.json" ]; then
-    #     echo '{"dependencies":{"Cake.CoreCLR": "'$CAKE_VERSION'"},"frameworks":{"netstandard1.6":{}}}' > "$TOOLS_DIR/project.json"
-    # fi
-    # exec dotnet restore "$TOOLS_DIR" --packages "$TOOLS_DIR" -f "$CAKE_FEED"
-    # if [ $? -ne 0 ]; then
-    #     echo "An error occured while installing Cake."
-    #     exit 1
-    # fi
     ZIP_NAME=Cake.CoreCLR.$CAKE_VERSION.zip
 
     # Download the Cake.CoreCLR nuget package and save it as a *.zip file.
@@ -77,10 +73,21 @@ if [ ! -f "$CAKE_DLL" ]; then
 fi
 
 # Make sure that Cake has been installed.
-if [ ! -f "$CAKE_DLL" ]; then
-    echo "Could not find Cake.exe at '$CAKE_DLL'."
-    exit 1
+# if [ ! -f "$CAKE_DLL" ]; then
+#     echo "Could not find Cake.exe at '$CAKE_DLL'."
+#     exit 1
+# fi
+
+###########################################################################
+# ADD DOCKER PLUGIN
+###########################################################################
+
+if [ ! -f "$DOCKER_NUPGK" ]; then
+    echo "Downloading Cake.Docker"
+    wget -O $DOCKER_NUPGK $DOCKER_ADDIN_URI
+    unzip $DOCKER_NUPGK -d $ADDIN_PATH/Cake.Docker
 fi
+
 
 ###########################################################################
 # RUN BUILD SCRIPT

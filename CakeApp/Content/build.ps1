@@ -34,7 +34,7 @@ Param(
     [string[]]$ScriptArgs
 )
 
-$CakeVersion = "0.19.4"
+$CakeVersion = "0.20.0"
 $NugetUrl = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 
 # Make sure tools folder exists
