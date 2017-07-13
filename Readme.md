@@ -73,7 +73,7 @@ or just `build.sh` to run the default target `test`. The *dos2unix* command is n
 | Pack | Packages all projects from the *src* folder into corresponding NuGet packages. The packages are placed in the *artifacts* folder. | Clean, Test |
 | Publish | Publishes all projects from *src* to the *artifacts* folder. You can use the published projects to run them every where else. | Clean, Test |
 | Build-Container | Builds a Docker container with the main application and tags the container based on the \"Version\" tag in the *.csproj file and a given build number (default 0). Futhermore the container gets a \"latest\" tag. | publish |
-| Push-Container | Pushes the two container tags (version and latest) into a Docker registry which you have to specify. | Build-Container |
+| Push-Container | Pushes the two container tags (version and latest) into a Docker registry which you have to specify with `-dockerRegistry="yourregistry"` | Build-Container |
 | Default | The same as *Test*. If no target is given, this one is used. | Clean, Build |
 
 ## Build the project
