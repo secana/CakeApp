@@ -207,7 +207,7 @@ Task("Default")
 		Information("To pack (nuget) the application use the cake build argument: --target Pack");
 		Information("To publish (to run it somewhere else) the application use the cake build argument: --target Publish");
 		Information("To build a Docker container with the application use the cake build argument: --target Build-Container");
-		Information("To push the Docker container into the Artifactory use the cake build argument: --target Push-Container");
+		Information("To push the Docker container into an Docker registry use the cake build argument: --target Push-Container -dockerRegistry=\"yourregistry\"");
 	});
 
 
