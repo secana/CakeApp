@@ -9,7 +9,7 @@ var solutionDir = System.IO.Directory.GetCurrentDirectory();
 var testResultDir = Argument("testResultDir", System.IO.Path.Combine(solutionDir, "test-results"));     // ./build.sh --target Build-Container -testResultsDir="somedir"
 var artifactDir = Argument("artifactDir", "./artifacts"); 												// ./build.sh --target Build-Container -artifactDir="somedir"
 var buildNumber = Argument<int>("buildNumber", 0); 														// ./build.sh --target Build-Container -buildNumber=5
-var dockerRegistry = Argument("dockerRegistry", "yourdockerregistry");									// ./build.sh --target Build-Container -dockerRegistry="yourregistry"
+var dockerRegistry = Argument("dockerRegistry", "local");												// ./build.sh --target Build-Container -dockerRegistry="local"
 var slnName = Argument("slnName", "CakeApp");
 
 
