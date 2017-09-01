@@ -6,7 +6,7 @@
 # Define directories.
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 TOOLS_DIR=$SCRIPT_DIR/tools
-CAKE_VERSION=0.21.
+CAKE_VERSION=0.21.1
 CAKE_FOLDER=$TOOLS_DIR/Cake.CoreCLR/$CAKE_VERSION/
 CAKE_DLL=$CAKE_FOLDER/Cake.dll
 ADDIN_PATH=$TOOLS_DIR/Addins
