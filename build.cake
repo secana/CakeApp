@@ -1,7 +1,7 @@
 
 /*
-1) clean old packages
-2) ensure all needed directories exist
+1) clean old packages DONE
+2) ensure all needed directories exist DONE
 3) package test version of template
 4) install test version of template
 5) create new sln with test version
@@ -29,15 +29,30 @@ Task("Clean")
 
 
 Task("PrepareDirectories")
+    .IsDependentOn("Clean")
 	.Does(() =>
 	{
 		EnsureDirectoryExists(testDirectory);
 		EnsureDirectoryExists(artifactDir);
 	});
 
+Task("PrepareTestNuSpec")
+    .IsDependentOn("PrepareDirectories")
+    .Does(() =>
+    {
+        var testSpecPath = System.IO.Path.Combine(testDirectory, "CakeApp-test.nuspec");
+        CopyFile("CakeApp.nuspec", testSpecPath);
+        var version = GetNuSpecVersion(testSpecPath);
+
+        var testVersion = $"{version}-test";
+
+        // Replace the version value with the test version value
+        ChangeNuSpecVersion(testSpecPath, testVersion);
+    });
+
 
 Task("Default")
-	.IsDependentOn("PrepareDirectories")
+	.IsDependentOn("Clean")
 	.Does(() =>
 	{
 		Information("Build and test the whole solution.");
@@ -45,5 +60,21 @@ Task("Default")
 		Information("To publish (to run it somewhere else) the application use the cake build argument: --target Publish");
 	});
 
+void ChangeNuSpecVersion(string nuspecPath, string newVersion)
+{
+    var doc = System.Xml.Linq.XDocument.Load(nuspecPath);
+	doc.Descendants().First(p => p.Name.LocalName == "version").Value = newVersion;
+    var fileStream = new System.IO.FileStream(nuspecPath, FileMode.Open); 
+    doc.Save(fileStream); 
+	Information($"Changed version from {nuspecPath} to {newVersion}");
+}
+
+string GetNuSpecVersion(string nuspecPath)
+{
+	var doc = System.Xml.Linq.XDocument.Load(nuspecPath);
+	var version = doc.Descendants().First(p => p.Name.LocalName == "version").Value;
+	Information($"Extrated version {version} from {nuspecPath}");
+	return version;
+}
 
 RunTarget(target);
