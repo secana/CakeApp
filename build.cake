@@ -2,7 +2,7 @@
 /*
 1) clean old packages DONE
 2) ensure all needed directories exist DONE
-3) package test version of template
+3) package test version of template DONE
 4) install test version of template
 5) create new sln with test version
 6) test test version
