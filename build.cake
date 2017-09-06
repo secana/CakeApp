@@ -50,6 +50,17 @@ Task("PrepareTestNuSpec")
         ChangeNuSpecVersion(testSpecPath, testVersion);
     });
 
+Task("PrepareTestTemplate")
+    .IsDependentOn("PrepareTestNuSpec")
+    .Does(() => {
+        var testTemplatePath = System.IO.Path.Combine(testDirectory, "CakeApp");
+        CopyDirectory("CakeApp", testTemplatePath);
+
+        // Replace the identity and shortname in the json template.json with test values
+        var jsonPath = System.IO.Path.Combine(testTemplatePath, "Content", ".template.config", "template.json");
+        ReplaceStringInFile(jsonPath, "\"identity\": \"Core.Cake.Template\"", "\"identity\": \"Core.Cake-Test.Template\"");
+        ReplaceStringInFile(jsonPath, "\"shortName\": \"cake\"", "\"shortName\": \"caketest\"");
+    });
 
 Task("Default")
 	.IsDependentOn("Clean")
@@ -59,6 +70,13 @@ Task("Default")
 		Information("To pack (nuget) the application use the cake build argument: --target Pack");
 		Information("To publish (to run it somewhere else) the application use the cake build argument: --target Publish");
 	});
+
+void ReplaceStringInFile(string file, string oldString, string newString)
+{
+    var text = System.IO.File.ReadAllText(file);
+    var newText = text.Replace(oldString, newString);
+    System.IO.File.WriteAllText(file, newText);
+}
 
 void ChangeNuSpecVersion(string nuspecPath, string newVersion)
 {
