@@ -42,12 +42,6 @@ Task("PrepareTestNuSpec")
     {
         var testSpecPath = System.IO.Path.Combine(testDirectory, "CakeApp-test.nuspec");
         CopyFile("CakeApp.nuspec", testSpecPath);
-        var version = GetNuSpecVersion(testSpecPath);
-
-        var testVersion = $"{version}-test";
-
-        // Replace the version value with the test version value
-        ChangeNuSpecVersion(testSpecPath, testVersion);
     });
 
 Task("PrepareTestTemplate")
@@ -62,6 +56,15 @@ Task("PrepareTestTemplate")
         ReplaceStringInFile(jsonPath, "\"shortName\": \"cake\"", "\"shortName\": \"caketest\"");
     });
 
+Task("PackageTestVersion")
+    .IsDependentOn("PrepareTestTemplate")
+    .Does(() => {
+        var testSpecPath = System.IO.Path.Combine(testDirectory, "CakeApp-test.nuspec");
+        var version = GetNuSpecVersion(testSpecPath);
+        var testVersion = $"{version}-test";
+        PackTemplate(testSpecPath, testVersion, testDirectory, testDirectory);
+    });
+
 Task("Default")
 	.IsDependentOn("Clean")
 	.Does(() =>
@@ -71,20 +74,23 @@ Task("Default")
 		Information("To publish (to run it somewhere else) the application use the cake build argument: --target Publish");
 	});
 
+void PackTemplate(string nuspecFile, string version, string workdingDirectory, string outputDirectory)
+{
+    var settings = new NuGetPackSettings {
+        OutputDirectory = outputDirectory,
+        ArgumentCustomization = args=>args.Append("-NoDefaultExcludes"),
+        WorkingDirectory = workdingDirectory,
+        Version = version
+    };
+
+    NuGetPack(nuspecFile, settings);
+}
+
 void ReplaceStringInFile(string file, string oldString, string newString)
 {
     var text = System.IO.File.ReadAllText(file);
     var newText = text.Replace(oldString, newString);
     System.IO.File.WriteAllText(file, newText);
-}
-
-void ChangeNuSpecVersion(string nuspecPath, string newVersion)
-{
-    var doc = System.Xml.Linq.XDocument.Load(nuspecPath);
-	doc.Descendants().First(p => p.Name.LocalName == "version").Value = newVersion;
-    var fileStream = new System.IO.FileStream(nuspecPath, FileMode.Open); 
-    doc.Save(fileStream); 
-	Information($"Changed version from {nuspecPath} to {newVersion}");
 }
 
 string GetNuSpecVersion(string nuspecPath)
