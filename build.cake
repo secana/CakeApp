@@ -3,9 +3,9 @@
 1) clean old packages DONE
 2) ensure all needed directories exist DONE
 3) package test version of template DONE
-4) install test version of template
-5) create new sln with test version
-6) test test version
+4) install test version of template DONE
+5) create new sln with test version DONE
+6) test test version IN PROGRESS
 7) if successful: package to release version
 8) publish package to nuget
 */
@@ -15,7 +15,9 @@ var testFailed = false;
 var solutionDir = System.IO.Directory.GetCurrentDirectory();
 
 var testDirectory = Argument("testDirectory", System.IO.Path.Combine(solutionDir, "test"));     // ./build.sh --target publish -testDirectory="somedir"
-var artifactDir = Argument("artifactDir", "./artifacts"); 									    // ./build.sh --target publish -artifactDir="somedir"
+var artifactDir = Argument("artifactDir", "./artifacts"); 		
+
+var testSln = System.IO.Path.Combine(testDirectory, "CakeTest");							    // ./build.sh --target publish -artifactDir="somedir"
 
 Task("Clean")
 	.Does(() =>
@@ -65,6 +67,33 @@ Task("PackageTestVersion")
         PackTemplate(testSpecPath, testVersion, testDirectory, testDirectory);
     });
 
+Task("InstallTestVersion")
+    .IsDependentOn("PackageTestVersion")
+    .Does(() => {
+        var testPackage = GetFiles("**/*-test.nupkg").ElementAt(0);
+        Information($"Found test package at {testPackage}");
+        InstallTemplate(testPackage.FullPath);
+    });
+
+Task("TestTestPackage")
+    .IsDependentOn("InstallTestVersion")
+    .Does(() => {
+        
+        // Create new sln from template
+        DotNetNew("caketest", testSln);
+
+        // Test publish task
+        RunPowerShellScript(testSln, "./build.ps1", "-Target publish");
+        var outputDll = System.IO.Path.Combine(testSln, "artifacts", "CakeTest.Console", "CakeTest.Console.dll");
+        if(!System.IO.File.Exists(outputDll))
+            throw new Exception($"Publish task of template failed. Could not find {outputDll}");
+        else
+            Information("\"Publish\" task of template ran successfully");
+
+        // TO DO:
+        // Test the pack task
+    });
+
 Task("Default")
 	.IsDependentOn("Clean")
 	.Does(() =>
@@ -73,6 +102,39 @@ Task("Default")
 		Information("To pack (nuget) the application use the cake build argument: --target Pack");
 		Information("To publish (to run it somewhere else) the application use the cake build argument: --target Publish");
 	});
+
+void RunPowerShellScript(string workDir, string script, string arguments)
+{
+    using(var process = StartAndReturnProcess(
+        "powershell", 
+        new ProcessSettings{ Arguments = $"{script} {arguments}",
+        WorkingDirectory = workDir }))
+    {
+        process.WaitForExit();
+        // This should output 0 as valid arguments supplied
+        Information($"Run {script} {arguments} with Exit code: {process.GetExitCode()}");
+    }
+}
+
+void InstallTemplate(string templatePackage)
+{
+    using(var process = StartAndReturnProcess("dotnet", new ProcessSettings{ Arguments = $"new -i {templatePackage}" }))
+    {
+        process.WaitForExit();
+        // This should output 0 as valid arguments supplied
+        Information($"Installed {templatePackage} with Exit code: {process.GetExitCode()}");
+    }
+}
+
+void DotNetNew(string template, string output)
+{
+    using(var process = StartAndReturnProcess("dotnet", new ProcessSettings{ Arguments = $"new {template} -o {output}" }))
+    {
+        process.WaitForExit();
+        // This should output 0 as valid arguments supplied
+        Information($"Created {template} in {output} with Exit code: {process.GetExitCode()}");
+    }
+}
 
 void PackTemplate(string nuspecFile, string version, string workdingDirectory, string outputDirectory)
 {
