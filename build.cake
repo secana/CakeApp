@@ -29,7 +29,6 @@ Task("Clean")
 			DeleteDirectory(artifactDir, recursive:true);
 	});
 
-
 Task("PrepareDirectories")
     .IsDependentOn("Clean")
 	.Does(() =>
@@ -75,27 +74,32 @@ Task("InstallTestVersion")
         InstallTemplate(testPackage.FullPath);
     });
 
-Task("TestTestPackage")
+Task("Test")
     .IsDependentOn("InstallTestVersion")
     .Does(() => {
         
         // Create new sln from template
         DotNetNew("caketest", testSln);
 
-        // Test publish task
-        RunPowerShellScript(testSln, "./build.ps1", "-Target publish");
+        // Test "publish" task
+        RunPowerShellScript(testSln, @"build.ps1", "-Target publish");
         var outputDll = System.IO.Path.Combine(testSln, "artifacts", "CakeTest.Console", "CakeTest.Console.dll");
         if(!System.IO.File.Exists(outputDll))
-            throw new Exception($"Publish task of template failed. Could not find {outputDll}");
+            throw new Exception($"\"Publish\" task of template failed. Could not find {outputDll}");
         else
             Information("\"Publish\" task of template ran successfully");
 
-        // TO DO:
-        // Test the pack task
+        // Test "pack" task
+        RunPowerShellScript(testSln, @"build.ps1", "-Target pack");
+        var outputPackage = System.IO.Path.Combine(testSln, "artifacts", "CakeTest.Console.0.0.0.nupkg");
+        if(!System.IO.File.Exists(outputPackage))
+            throw new Exception($"\"Pack\" task of template failed. Could not find {outputPackage}");
+        else
+            Information("\"Pack\" task of template ran successfully");
     });
 
 Task("Default")
-	.IsDependentOn("Clean")
+	.IsDependentOn("Test")
 	.Does(() =>
 	{
 		Information("Build and test the whole solution.");
@@ -105,10 +109,10 @@ Task("Default")
 
 void RunPowerShellScript(string workDir, string script, string arguments)
 {
+    var psCommand = $"\"& {System.IO.Path.Combine(workDir, script)} {arguments}\"";
     using(var process = StartAndReturnProcess(
         "powershell", 
-        new ProcessSettings{ Arguments = $"{script} {arguments}",
-        WorkingDirectory = workDir }))
+        new ProcessSettings{ Arguments = psCommand, WorkingDirectory = workDir }))
     {
         process.WaitForExit();
         // This should output 0 as valid arguments supplied
