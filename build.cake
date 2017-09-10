@@ -5,7 +5,7 @@
 3) package test version of template DONE
 4) install test version of template DONE
 5) create new sln with test version DONE
-6) test test version IN PROGRESS
+6) test test version DONE
 7) if successful: package to release version
 8) publish package to nuget
 */
@@ -96,6 +96,19 @@ Task("Test")
             throw new Exception($"\"Pack\" task of template failed. Could not find {outputPackage}");
         else
             Information("\"Pack\" task of template ran successfully");
+    });
+
+Task("Pack")
+    .IsDependentOn("Test")
+    .Does(() => {
+        var settings = new NuGetPackSettings  
+        {
+            ArgumentCustomization = args=>args.Append("-NoDefaultExcludes"),
+            OutputDirectory = artifactDir
+        };
+
+        var nuspec = System.IO.Path.Combine(solutionDir, "CakeApp.nuspec");
+        NuGetPack(nuspec, settings);
     });
 
 Task("Default")
