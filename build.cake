@@ -6,18 +6,17 @@
 4) install test version of template DONE
 5) create new sln with test version DONE
 6) test test version DONE
-7) if successful: package to release version
-8) publish package to nuget
+7) if successful: package to release version DONE
+8) publish package to nuget DONE ??? Task says package is pushed but not listed on nuget.org 
 */
 
 var target = Argument("target", "Default");
-var testFailed = false;
 var solutionDir = System.IO.Directory.GetCurrentDirectory();
 
-var testDirectory = Argument("testDirectory", System.IO.Path.Combine(solutionDir, "test"));     // ./build.sh --target publish -testDirectory="somedir"
+var testDirectory = Argument("testDirectory", System.IO.Path.Combine(solutionDir, "test"));     // ./build.ps1 --target publish -testDirectory="somedir"
 var artifactDir = Argument("artifactDir", "./artifacts"); 		
-
-var testSln = System.IO.Path.Combine(testDirectory, "CakeTest");							    // ./build.sh --target publish -artifactDir="somedir"
+var apiKey = Argument<string>("apiKey", null);                                                  // ./build.ps1 --target push -apiKey="your github api key"                                            
+var testSln = System.IO.Path.Combine(testDirectory, "CakeTest");							    // ./build.ps1 --target publish -artifactDir="somedir"
 
 Task("Clean")
 	.Does(() =>
@@ -109,6 +108,23 @@ Task("Pack")
 
         var nuspec = System.IO.Path.Combine(solutionDir, "CakeApp.nuspec");
         NuGetPack(nuspec, settings);
+    });
+
+Task("Push")
+    .IsDependentOn("Pack")
+    .Does(() => {
+        var package = GetFiles($"{artifactDir}/CakeApp.*.nupkg").ElementAt(0);
+        var source = "https://www.nuget.org/packages/CakeApp/";
+
+        if(apiKey==null)
+            throw new ArgumentNullException(nameof(apiKey), "The \"apiKey\" argument must be set for this task.");
+
+        Information($"Push {package} to {source}");
+
+        NuGetPush(package, new NuGetPushSettings {
+            Source = source,
+            ApiKey = apiKey
+        });
     });
 
 Task("Default")
