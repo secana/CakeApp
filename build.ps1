@@ -22,8 +22,6 @@ Remaining arguments are added here.
 http://cakebuild.net
 #>
 
-
-
 [CmdletBinding()]
 Param(
     [string]$Target = "Default",
@@ -35,10 +33,6 @@ Param(
     [Parameter(Position=0,Mandatory=$false,ValueFromRemainingArguments=$true)]
     [string[]]$ScriptArgs
 )
-
-# Set the working directory to the current script directory.
-# This is needed for the automated build tests.
-Set-Location (Split-Path $script:MyInvocation.MyCommand.Path)
 
 $CakeVersion = "0.21.1"
 $NugetUrl = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
