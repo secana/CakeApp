@@ -1,15 +1,3 @@
-
-/*
-1) clean old packages DONE
-2) ensure all needed directories exist DONE
-3) package test version of template DONE
-4) install test version of template DONE
-5) create new sln with test version DONE
-6) test test version DONE
-7) if successful: package to release version DONE
-8) publish package to nuget DONE ??? Task says package is pushed but not listed on nuget.org 
-*/
-
 var target = Argument("target", "Default");
 var solutionDir = System.IO.Directory.GetCurrentDirectory();
 
@@ -114,7 +102,7 @@ Task("Push")
     .IsDependentOn("Pack")
     .Does(() => {
         var package = GetFiles($"{artifactDir}/CakeApp.*.nupkg").ElementAt(0);
-        var source = "https://www.nuget.org/packages/CakeApp/";
+        var source = "https://www.nuget.org/api/v2/package";
 
         if(apiKey==null)
             throw new ArgumentNullException(nameof(apiKey), "The \"apiKey\" argument must be set for this task.");
