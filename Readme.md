@@ -26,17 +26,17 @@ This template creates the following structure on your disk, where *CakeApp* is r
 ## Installation
 On Windows PowerShell:
 ```
-Install-Package CakeApp -Destination .\CakeApp.2.0.0.nupkg
+Install-Package CakeApp -Destination .\CakeApp.2.0.1.nupkg
 
-dotnet new -i .\CakeApp.2.0.0.nupkg
+dotnet new -i .\CakeApp.2.0.1.nupkg
 ```
 It could be necessary to run the installation from an elevated shell.
 
 On Linux:
 ```
-wget https://www.nuget.org/api/v2/package/CakeApp/2.0.0 -O CakeApp.2.0.0.nupkg
+wget https://www.nuget.org/api/v2/package/CakeApp/2.0.1 -O CakeApp.2.0.1.nupkg
 
-dotnet new -i ./CakeApp.2.0.0.nupkg
+dotnet new -i ./CakeApp.2.0.1.nupkg
 ```  
 
 ## Usage
@@ -78,4 +78,4 @@ or just `build.sh` to run the default target `test`. The *dos2unix* command is n
 
 ## Build the project
 To build a usable NuGet package from the template source run:
-`nuget pack -NoDefaultExcludes .\CakeApp.2.0.0.nuspec` from a Windows machine.
+`nuget pack -NoDefaultExcludes .\CakeApp.2.0.1.nuspec` from a Windows machine.
