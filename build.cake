@@ -120,8 +120,8 @@ Task("Default")
 	.Does(() =>
 	{
 		Information("Build and test the whole solution.");
-		Information("To pack (nuget) the application use the cake build argument: --target Pack");
-		Information("To push the NuGet template to nuget.org use: -Target Push --apiKey=\"your nuget api key\");
+		Information("To pack (nuget) the application use the cake build argument: -Target Pack");
+		Information("To push the NuGet template to nuget.org use: -Target Push --apiKey=\"your nuget api key\"");
 	});
 
 void RunPowerShellScript(string workDir, string script, string arguments)
