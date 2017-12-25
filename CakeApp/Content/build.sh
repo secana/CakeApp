@@ -6,12 +6,12 @@
 # Define directories.
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 TOOLS_DIR=$SCRIPT_DIR/tools
-CAKE_VERSION=0.21.1
+CAKE_VERSION=0.23.0
 CAKE_FOLDER=$TOOLS_DIR/Cake.CoreCLR/$CAKE_VERSION/
 CAKE_DLL=$CAKE_FOLDER/Cake.dll
 ADDIN_PATH=$TOOLS_DIR/Addins
 
-DOCKER_ADDIN_URI="https://www.nuget.org/api/v2/package/Cake.Docker/0.7.7"
+DOCKER_ADDIN_URI="https://www.nuget.org/api/v2/package/Cake.Docker/0.8.3"
 DOCKER_ADDIN_PATH=$ADDIN_PATH/Core.Docker/lib/netstandard1.6/Cake.Docker.dll
 DOCKER_NUPGK=$ADDIN_PATH/Cake.Docker.nupkg
 

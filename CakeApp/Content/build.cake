@@ -1,5 +1,4 @@
-#addin "Cake.Docker"
-
+#addin nuget:?package=Cake.Docker&version=0.8.3
 
 var target = Argument("target", "Default");
 var testFailed = false;
@@ -10,7 +9,7 @@ var testResultDir = Argument("testResultDir", System.IO.Path.Combine(solutionDir
 var artifactDir = Argument("artifactDir", "./artifacts"); 												// ./build.sh --target Build-Container -artifactDir="somedir"
 var buildNumber = Argument<int>("buildNumber", 0); 														// ./build.sh --target Build-Container -buildNumber=5
 var dockerRegistry = Argument("dockerRegistry", "local");												// ./build.sh --target Build-Container -dockerRegistry="local"
-var slnName = Argument("slnName", "CakeApp");
+var slnName = Argument("slnName", "FastParser");
 
 
 Information("Solution Directory: {0}", solutionDir);
@@ -20,19 +19,36 @@ Information("Test Results Directory: {0}", testResultDir);
 Task("Clean")
 	.Does(() =>
 	{
+		var settings = new DeleteDirectorySettings {
+    		Recursive = true,
+    		Force = true
+		};
+
 		if(DirectoryExists(testResultDir))
-			DeleteDirectory(testResultDir, recursive:true);
+		{
+			CleanDirectory(testResultDir);	
+			DeleteDirectory(testResultDir, settings);
+		}
+			
 
 		if(DirectoryExists(artifactDir))
-			DeleteDirectory(artifactDir, recursive:true);
+		{
+			CleanDirectory(artifactDir);
+			DeleteDirectory(artifactDir, settings);
+		}
+			
 
 		var binDirs = GetDirectories("./**/bin");
 		var objDirs = GetDirectories("./**/obj");
 		var testResDirs = GetDirectories("./**/TestResults");
 		
-		DeleteDirectories(binDirs, true);
-		DeleteDirectories(objDirs, true);
-		DeleteDirectories(testResDirs, true);
+		CleanDirectories(binDirs);
+		CleanDirectories(objDirs);
+		CleanDirectories(testResDirs);
+
+		DeleteDirectories(binDirs, settings);
+		DeleteDirectories(objDirs, settings);
+		DeleteDirectories(testResDirs, settings);
 	});
 
 
@@ -175,12 +191,12 @@ Task("Build-Container")
 		Information($"Build docker image {tagVersion}");
 		Information($"Build docker image {tagLatest}");
 
-		var buildArgs = new DockerBuildSettings 
+		var buildArgs = new Cake.Docker.DockerImageBuildSettings 
 		{
 			Tag = new List<string>() { tagVersion, tagLatest }.ToArray()
 		};
 
-		DockerBuild(buildArgs, solutionDir);
+		Cake.Docker.DockerAliases.DockerBuild(Context, buildArgs, solutionDir);
 	});
 
 
@@ -195,7 +211,7 @@ Task("Push-Container")
 		}
 
 		var imageName = GetImageName().ToLower();
-		DockerPush(imageName);
+		Cake.Docker.DockerAliases.DockerPush(Context, imageName);
 	});
 
 
