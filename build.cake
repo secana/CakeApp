@@ -121,7 +121,7 @@ Task("Default")
 	{
 		Information("Build and test the whole solution.");
 		Information("To pack (nuget) the application use the cake build argument: --target Pack");
-		Information("To publish (to run it somewhere else) the application use the cake build argument: --target Publish");
+		Information("To push the NuGet template to nuget.org use: -Target Push --apiKey="your nuget api key");
 	});
 
 void RunPowerShellScript(string workDir, string script, string arguments)
