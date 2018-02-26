@@ -78,4 +78,4 @@ or just `build.sh` to run the default target `test`. The *dos2unix* command is n
 
 ## Build the project
 To build a usable NuGet package from the template source run:
-`nuget pack -NoDefaultExcludes .\CakeApp.2.0.3.nuspec` from a Windows machine.
+`build.ps1 -Target Pack` from a Windows machine. You find the built Nuget package under *artifacts*.
