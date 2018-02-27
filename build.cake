@@ -83,6 +83,11 @@ Task("Test")
             throw new Exception($"\"Pack\" task of template failed. Could not find {outputPackage}");
         else
             Information("\"Pack\" task of template ran successfully");
+
+        // Uninstall the test template from the target.
+        var testPackage = GetFiles("**/*-test.nupkg").ElementAt(0);
+        var testPackageName = testPackage.GetFilename().FullPath.Split(new [] {".nupkg"}, StringSplitOptions.None)[0];
+        UninstallTemplate(testPackageName);
     });
 
 Task("Pack")
@@ -144,6 +149,16 @@ void InstallTemplate(string templatePackage)
         process.WaitForExit();
         // This should output 0 as valid arguments supplied
         Information($"Installed {templatePackage} with Exit code: {process.GetExitCode()}");
+    }
+}
+
+void UninstallTemplate(string templatePackage)
+{
+    using(var process = StartAndReturnProcess("dotnet", new ProcessSettings{ Arguments = $"new -u {templatePackage}" }))
+    {
+        process.WaitForExit();
+        // This should output 0 as valid arguments supplied
+        Information($"Uninstalled {templatePackage} with Exit code: {process.GetExitCode()}");
     }
 }
 
