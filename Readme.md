@@ -1,6 +1,9 @@
 # CakeApp
 A .Net Core solution template using the [Cake](http://cakebuild.net/) build system. It provides an initial console project and a corresponding [XUnit](https://xunit.github.io/) test project. Furthermore it adds cake build scripts for Windows and Linux.
 
+[![NuGet](https://img.shields.io/nuget/v/CakeApp.svg)](https://www.nuget.org/packages/CakeApp/)
+[![NuGet](https://img.shields.io/nuget/dt/CakeApp.svg)](https://www.nuget.org/packages/CakeApp/)
+
 ## Template layout
 This template creates the following structure on your disk, where *CakeApp* is replaced by the name of your solution.
 
