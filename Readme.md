@@ -1,6 +1,9 @@
 # CakeApp
 A .Net Core solution template using the [Cake](http://cakebuild.net/) build system. It provides an initial console project and a corresponding [XUnit](https://xunit.github.io/) test project. Furthermore it adds cake build scripts for Windows and Linux.
 
+[![NuGet](https://img.shields.io/nuget/v/CakeApp.svg)](https://www.nuget.org/packages/CakeApp/)
+[![NuGet](https://img.shields.io/nuget/dt/CakeApp.svg)](https://www.nuget.org/packages/CakeApp/)
+
 ## Template layout
 This template creates the following structure on your disk, where *CakeApp* is replaced by the name of your solution.
 
@@ -69,7 +72,7 @@ or just `build.sh` to run the default target `test`. The *dos2unix* command is n
 | Clean | Cleans your last Cake build and deletes all build artifacts. | PrepareDirectories |
 | Restore | Restores all NuGet packages in your projects. It will try it up to five times, since sometimes the restore does not work on the first try. | - |
 | Build | Builds your whole solution with the *Release* configuration. | Restore |
-| Test | Runs all Unit test projects in the *test* folder which project names are ending with **Test*. Other projects are ignored. The test results **.trx* files are put into the *testResults* folder. | Clean, Build | 
+| Test | Runs all Unit test projects in the *test* folder which project names are ending with **Test**. Other projects are ignored. The test results **.trx* files are put into the *testResults* folder. | Clean, Build | 
 | Pack | Packages all projects from the *src* folder into corresponding NuGet packages. The packages are placed in the *artifacts* folder. | Clean, Test |
 | Publish | Publishes all projects from *src* to the *artifacts* folder. You can use the published projects to run them every where else. | Clean, Test |
 | Build-Container | Builds a Docker container with the main application and tags the container based on the \"Version\" tag in the *.csproj file and a given build number (default 0). Futhermore the container gets a \"latest\" tag. | publish |
