@@ -82,3 +82,7 @@ or just `build.sh` to run the default target `test`. The *dos2unix* command is n
 ## Build the project
 To build a usable NuGet package from the template source run:
 `build.ps1 -Target Pack` from a Windows machine. You find the built Nuget package under *artifacts*.
+
+## Release-Notes
+
+Release notes can be found here: [Release-Notes](Release-Notes.md)
