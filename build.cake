@@ -3,8 +3,8 @@ var solutionDir = System.IO.Directory.GetCurrentDirectory();
 
 var testDirectory = Argument("testDirectory", System.IO.Path.Combine(solutionDir, "test"));     // ./build.ps1 --target publish -testDirectory="somedir"
 var artifactDir = Argument("artifactDir", "./artifacts"); 		
-var apiKey = Argument<string>("apiKey", null);                                                  // ./build.ps1 --target push -apiKey="your github api key"                                            
-var testSln = System.IO.Path.Combine(testDirectory, "CakeTest");							    // ./build.ps1 --target publish -artifactDir="somedir"
+var apiKey = Argument<string>("apiKey", null);                                                  // ./build.ps1 --target push -apiKey="your nuget.org api key"                                            
+var testSln = System.IO.Path.Combine(testDirectory, "CakeTest");							   
 
 Task("Clean")
 	.Does(() =>
