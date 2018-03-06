@@ -29,17 +29,17 @@ This template creates the following structure on your disk, where *CakeApp* is r
 ## Installation
 On Windows PowerShell:
 ```
-Invoke-WebRequest https://www.nuget.org/api/v2/package/CakeApp/2.1.0 -OutFile CakeApp.2.1.0.nupkg
+Invoke-WebRequest https://www.nuget.org/api/v2/package/CakeApp/2.1.1 -OutFile CakeApp.2.1.1.nupkg
 
-dotnet new -i .\CakeApp.2.1.0.nupkg
+dotnet new -i .\CakeApp.2.1.1.nupkg
 ```
 It could be necessary to run the installation from an elevated shell.
 
 On Linux:
 ```
-wget https://www.nuget.org/api/v2/package/CakeApp/2.1.0 -O CakeApp.2.1.0.nupkg
+wget https://www.nuget.org/api/v2/package/CakeApp/2.1.1 -O CakeApp.2.1.1.nupkg
 
-dotnet new -i ./CakeApp.2.1.0.nupkg
+dotnet new -i ./CakeApp.2.1.1.nupkg
 ```  
 
 ## Usage

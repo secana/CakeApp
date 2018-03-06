@@ -9,7 +9,7 @@ var testResultDir = Argument("testResultDir", System.IO.Path.Combine(solutionDir
 var artifactDir = Argument("artifactDir", "./artifacts"); 												// ./build.sh --target Build-Container -artifactDir="somedir"
 var buildNumber = Argument<int>("buildNumber", 0); 														// ./build.sh --target Build-Container -buildNumber=5
 var dockerRegistry = Argument("dockerRegistry", "local");												// ./build.sh --target Build-Container -dockerRegistry="local"
-var slnName = Argument("slnName", "FastParser");
+var slnName = Argument("slnName", "CakeApp");
 
 
 Information("Solution Directory: {0}", solutionDir);

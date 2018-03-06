@@ -1,3 +1,6 @@
+### 2.1.1
+* Fixed bug in "Build-Container" Task
+
 ### 2.1.0
 * Updated to Cake Build version 0.26.0 which only depends on .Net Core 2.0 instead of .Net 1.x
 * Updated Cake.Docker plugin from 0.8.3 to 0.9.0 which depends only on .Net Core 2.0 instead of .Net 1.x
