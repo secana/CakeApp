@@ -40,7 +40,7 @@ Param(
 # This is needed for the automated build tests.
 Set-Location (Split-Path $script:MyInvocation.MyCommand.Path)
 
-$CakeVersion = "0.26.0"
+$CakeVersion = "0.26.1"
 $NugetUrl = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 
 # Make sure tools folder exists
