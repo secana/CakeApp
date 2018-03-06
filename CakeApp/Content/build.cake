@@ -1,4 +1,4 @@
-#addin nuget:?package=Cake.Docker&version=0.8.3
+#addin nuget:?package=Cake.Docker&version=0.9.0
 
 var target = Argument("target", "Default");
 var testFailed = false;
