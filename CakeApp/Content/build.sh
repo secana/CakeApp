@@ -11,9 +11,6 @@ NUGET_URL="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 CAKE_FOLDER=$TOOLS_DIR/Cake.CoreCLR/$CAKE_VERSION/
 CAKE_DLL=$CAKE_FOLDER/Cake.dll
 ADDIN_PATH=$TOOLS_DIR/Addins
-
-DOCKER_ADDIN_URI="https://www.nuget.org/api/v2/package/Cake.Docker/0.8.3"
-DOCKER_NUPGK=$ADDIN_PATH/Cake.Docker.nupkg
 NUGET_EXE_PATH=$TOOLS_DIR/nuget.exe
 
 # Define default arguments.
@@ -41,18 +38,6 @@ if [ ! -d "$TOOLS_DIR" ]; then
     mkdir "$TOOLS_DIR"
 	mkdir "$ADDIN_PATH"
 fi
-
-###########################################################################
-# ADD DOCKER PLUGIN
-###########################################################################
-
-if [ ! -f "$DOCKER_NUPGK" ]; then
-    echo "Downloading Cake.Docker"
-    wget $DOCKER_ADDIN_URI -O $DOCKER_NUPGK
-	mkdir -p $ADDIN_PATH/cake.docker.0.8.3/Cake.Docker
-    unzip $DOCKER_NUPGK -d $ADDIN_PATH/cake.docker.0.8.3/Cake.Docker
-fi
-
 
 ###########################################################################
 # INSTALL .NET CORE CLI
