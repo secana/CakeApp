@@ -29,7 +29,7 @@ This template creates the following structure on your disk, where *CakeApp* is r
 ## Installation
 On Windows PowerShell or Linux Shell:
 ```
-dotnet new -i CakeApp.2.1.2
+dotnet new -i CakeApp
 ```
 It could be necessary to run the installation from an elevated shell.
 
