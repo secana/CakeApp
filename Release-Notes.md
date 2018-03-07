@@ -1,3 +1,6 @@
+### 2.1.2
+* Removed manual download of Docker package from the build.sh script
+
 ### 2.1.1
 * Fixed bug in "Build-Container" Task
 
