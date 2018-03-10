@@ -1,4 +1,4 @@
-### 2.1.3
+### 2.1.3 - Unreleased
 * Added Readme.md to the sln file to be listed in VS
 * Configured the appsettings.json to be copied to the output folder
 * Set the C# version to latest
