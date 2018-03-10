@@ -1,7 +1,9 @@
-### 2.1.3 - Unreleased
+### 2.1.3
 * Added Readme.md to the sln file to be listed in VS
 * Configured the appsettings.json to be copied to the output folder
 * Set the C# version to latest
+* Better Docker Alias calls in build.cake
+* Better testing of the whole template
 
 ### 2.1.2
 * Removed manual download of Docker package from the build.sh script
