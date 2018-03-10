@@ -104,9 +104,9 @@ Task("Test")
             Information("\"Pack\" task of Linux template ran successfully");
 
         
-        /************************************************
-        *             Windows build.ps1 test
-        *************************************************/
+        // /************************************************
+        // *             Windows build.ps1 test
+        // *************************************************/
         DotNetNew("caketest", testSln);
         //Test "publish" task
         RunPowerShellScript(testSln, @"build.ps1", "-Target publish");
@@ -123,6 +123,13 @@ Task("Test")
             throw new Exception($"\"Pack\" task of template failed. Could not find {outputPackage}");
         else
             Information("\"Pack\" task of template ran successfully");
+
+        /************************************************
+        *        Test Docker Container build task
+        *************************************************/
+        RunPowerShellScript(testSln, @"build.ps1", "-Target Build-Container");
+        RunPowerShellScript(@".\", @"dockerimages.ps1", "");
+        DockerRmi(new string[] {"local/caketest", "local/caketest:0.0.0-0"});
 
         /************************************************
         *   Uninstall the test template from the target

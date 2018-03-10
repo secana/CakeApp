@@ -191,12 +191,12 @@ Task("Build-Container")
 		Information($"Build docker image {tagVersion}");
 		Information($"Build docker image {tagLatest}");
 
-		var buildArgs = new Cake.Docker.DockerImageBuildSettings 
+		var buildArgs = new DockerImageBuildSettings 
 		{
 			Tag = new List<string>() { tagVersion, tagLatest }.ToArray()
 		};
 
-		Cake.Docker.DockerAliases.DockerBuild(Context, buildArgs, solutionDir);
+		DockerBuild(buildArgs, solutionDir);
 	});
 
 
@@ -211,7 +211,7 @@ Task("Push-Container")
 		}
 
 		var imageName = GetImageName().ToLower();
-		Cake.Docker.DockerAliases.DockerPush(Context, imageName);
+		DockerPush(imageName);
 	});
 
 
