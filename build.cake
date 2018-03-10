@@ -85,23 +85,23 @@ Task("Test")
             Tty = true
         };
 
-        // // Test "publish" task
-        // DockerRun(dockerSettings, "secana/cakeapp", "bin/bash -c \"cd /data && chmod u+x build.sh && dos2unix build.sh && ./build.sh --target publish\"");
+        // Test "publish" task
+        DockerRun(dockerSettings, "secana/cakeapp", "bin/bash -c \"cd /data && chmod u+x build.sh && dos2unix build.sh && ./build.sh --target publish\"");
 
-        // var outputDllLinux = System.IO.Path.Combine(testSlnLinux, "artifacts", "CakeTestLinux.Console", "CakeTestLinux.Console.dll");
-        // if(!System.IO.File.Exists(outputDllLinux))
-        //     throw new Exception($"\"Publish\" task of Linux template failed. Could not find {outputDllLinux}");
-        // else
-        //     Information("\"Publish\" task of Linux template ran successfully");
+        var outputDllLinux = System.IO.Path.Combine(testSlnLinux, "artifacts", "CakeTestLinux.Console", "CakeTestLinux.Console.dll");
+        if(!System.IO.File.Exists(outputDllLinux))
+            throw new Exception($"\"Publish\" task of Linux template failed. Could not find {outputDllLinux}");
+        else
+            Information("\"Publish\" task of Linux template ran successfully");
 
-        // // Test "pack" task
-        // DockerRun(dockerSettings, "secana/cakeapp", "bin/bash -c \"cd /data && chmod u+x build.sh && dos2unix build.sh && ./build.sh --target pack\"");
+        // Test "pack" task
+        DockerRun(dockerSettings, "secana/cakeapp", "bin/bash -c \"cd /data && chmod u+x build.sh && dos2unix build.sh && ./build.sh --target pack\"");
 
-        // var outputPackageLinux = System.IO.Path.Combine(testSlnLinux, "artifacts", "CakeTestLinux.Console.0.0.0.nupkg");
-        // if(!System.IO.File.Exists(outputPackageLinux))
-        //     throw new Exception($"\"Pack\" task of Linux template failed. Could not find {outputPackageLinux}");
-        // else
-        //     Information("\"Pack\" task of Linux template ran successfully");
+        var outputPackageLinux = System.IO.Path.Combine(testSlnLinux, "artifacts", "CakeTestLinux.Console.0.0.0.nupkg");
+        if(!System.IO.File.Exists(outputPackageLinux))
+            throw new Exception($"\"Pack\" task of Linux template failed. Could not find {outputPackageLinux}");
+        else
+            Information("\"Pack\" task of Linux template ran successfully");
 
         
         /************************************************
