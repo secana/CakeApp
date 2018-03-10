@@ -1,19 +1,26 @@
-var target = Argument("target", "Default");
-var solutionDir = System.IO.Directory.GetCurrentDirectory();
+#addin nuget:?package=Cake.Docker&version=0.9.0
 
-var testDirectory = Argument("testDirectory", System.IO.Path.Combine(solutionDir, "test"));     // ./build.ps1 --target publish -testDirectory="somedir"
-var artifactDir = Argument("artifactDir", "./artifacts"); 		
-var apiKey = Argument<string>("apiKey", null);                                                  // ./build.ps1 --target push -apiKey="your nuget.org api key"                                            
-var testSln = System.IO.Path.Combine(testDirectory, "CakeTest");							   
+var target          = Argument("target", "Default");
+var solutionDir     = System.IO.Directory.GetCurrentDirectory();
+var testDirectory   = Argument("testDirectory", System.IO.Path.Combine(solutionDir, "test"));  
+var artifactDir     = Argument("artifactDir", "./artifacts"); 		
+var apiKey          = Argument<string>("apiKey", null);                                                                       
+var testSln         = System.IO.Path.Combine(testDirectory, "CakeTest");							   
+var testSlnLinux    = System.IO.Path.Combine(testDirectory, "CakeTestLinux");	
 
 Task("Clean")
 	.Does(() =>
 	{
+        var settings = new DeleteDirectorySettings {
+            Recursive = true,
+            Force = true
+        };
+
 		if(DirectoryExists(testDirectory))
-			DeleteDirectory(testDirectory, recursive:true);
+			DeleteDirectory(testDirectory, settings);
 
 		if(DirectoryExists(artifactDir))
-			DeleteDirectory(artifactDir, recursive:true);
+			DeleteDirectory(artifactDir, settings);
 	});
 
 Task("PrepareDirectories")
@@ -64,11 +71,44 @@ Task("InstallTestVersion")
 Task("Test")
     .IsDependentOn("InstallTestVersion")
     .Does(() => {
-        
-        // Create new sln from template
-        DotNetNew("caketest", testSln);
+        /************************************************
+        *             Linux build.sh test
+        *************************************************/
+        DotNetNew("caketest", testSlnLinux);
+
+        var dockerSettings = new DockerContainerRunSettings 
+        {
+            Volume = new string[]{$"{testSlnLinux}:/data"},
+            Rm = true,
+            Name = "cakeapptest",
+            Interactive = true,
+            Tty = true
+        };
 
         // Test "publish" task
+        DockerRun(dockerSettings, "secana/cakeapp", "bin/bash -c \"cd /data && chmod u+x build.sh && dos2unix build.sh && ./build.sh --target publish\"");
+
+        var outputDllLinux = System.IO.Path.Combine(testSlnLinux, "artifacts", "CakeTestLinux.Console", "CakeTestLinux.Console.dll");
+        if(!System.IO.File.Exists(outputDllLinux))
+            throw new Exception($"\"Publish\" task of Linux template failed. Could not find {outputDllLinux}");
+        else
+            Information("\"Publish\" task of Linux template ran successfully");
+
+        // Test "pack" task
+        DockerRun(dockerSettings, "secana/cakeapp", "bin/bash -c \"cd /data && chmod u+x build.sh && dos2unix build.sh && ./build.sh --target pack\"");
+
+        var outputPackageLinux = System.IO.Path.Combine(testSlnLinux, "artifacts", "CakeTestLinux.Console.0.0.0.nupkg");
+        if(!System.IO.File.Exists(outputPackageLinux))
+            throw new Exception($"\"Pack\" task of Linux template failed. Could not find {outputPackageLinux}");
+        else
+            Information("\"Pack\" task of Linux template ran successfully");
+
+        
+        /************************************************
+        *             Windows build.ps1 test
+        *************************************************/
+        DotNetNew("caketest", testSln);
+        //Test "publish" task
         RunPowerShellScript(testSln, @"build.ps1", "-Target publish");
         var outputDll = System.IO.Path.Combine(testSln, "artifacts", "CakeTest.Console", "CakeTest.Console.dll");
         if(!System.IO.File.Exists(outputDll))
@@ -84,7 +124,10 @@ Task("Test")
         else
             Information("\"Pack\" task of template ran successfully");
 
-        // Uninstall the test template from the target.
+        /************************************************
+        *   Uninstall the test template from the target
+        *************************************************/
+
         var testPackage = GetFiles("**/*-test.nupkg").ElementAt(0);
         var testPackageName = testPackage.GetFilename().FullPath.Split(new [] {".nupkg"}, StringSplitOptions.None)[0];
         UninstallTemplate(testPackageName);
