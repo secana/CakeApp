@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		build.sh = build.sh
 		docker.sh = docker.sh
 		Dockerfile = Dockerfile
+		Readme.md = Readme.md
 	EndProjectSection
 EndProject
 Global
@@ -61,5 +62,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{60B508F8-5EF1-43A4-8965-4AD2E178C710} = {749B1421-3177-4C7A-A66B-541BD4E925B0}
 		{D12645A3-2E8E-4A42-8B16-427743877DF1} = {ADD2EBBA-A839-4E4A-9253-CDE29A372F07}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5E91C34C-3AEC-4084-BA02-753C9236AA34}
 	EndGlobalSection
 EndGlobal
