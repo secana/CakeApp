@@ -31,7 +31,10 @@ On Windows PowerShell or Linux Shell:
 ```
 dotnet new -i CakeApp
 ```
-It could be necessary to run the installation from an elevated shell.
+To uninstall the template run:
+```
+dotnet new -u CakeApp
+```
 
 ## Usage
 This section will shortly describe how to use the template.
