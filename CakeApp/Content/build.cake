@@ -1,4 +1,5 @@
 #addin nuget:?package=Cake.Docker&version=0.9.0
+#addin nuget:?package=Cake.Figlet&version=1.1.0
 
 var target = Argument("target", "Default");
 var testFailed = false;
@@ -11,10 +12,7 @@ var buildNumber = Argument<int>("buildNumber", 0); 														// ./build.sh -
 var dockerRegistry = Argument("dockerRegistry", "local");												// ./build.sh --target Build-Container -dockerRegistry="local"
 var slnName = Argument("slnName", "CakeApp");
 
-
-Information("Solution Directory: {0}", solutionDir);
-Information("Test Results Directory: {0}", testResultDir);
-
+Information(Figlet("CakeApp"));
 
 Task("Clean")
 	.Does(() =>
