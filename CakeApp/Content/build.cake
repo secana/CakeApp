@@ -88,33 +88,21 @@ Task("Build")
 Task("Test")
 	.IsDependentOn("Build")
 	.ContinueOnError()
+	.DoesForEach(GetTestProjectFiles(), (testProject) =>
+	{
+		var projectFolder = System.IO.Path.GetDirectoryName(testProject.FullPath);
+		DotNetCoreTest(testProject.FullPath, new DotNetCoreTestSettings
+		{
+			ArgumentCustomization = args => args.Append("-l trx"),
+			WorkingDirectory = projectFolder
+		});
+	})
 	.Does(() =>
 	{
-		var tests = GetTestProjectFiles();
-		
-		foreach(var test in tests)
-		{
-			var projectFolder = System.IO.Path.GetDirectoryName(test.FullPath);
-
-			try
-			{
-				DotNetCoreTest(test.FullPath, new DotNetCoreTestSettings
-				{
-					ArgumentCustomization = args => args.Append("-l trx"),
-					WorkingDirectory = projectFolder
-				});
-			}
-			catch(Exception e)
-			{
-				testFailed = true;
-				Error(e.Message.ToString());
-			}
-		}
-
-		// Copy test result files.
 		var tmpTestResultFiles = GetFiles("./**/*.trx");
 		CopyFiles(tmpTestResultFiles, testResultDir);
-	});
+	})
+	.DeferOnError();
 
 
 Task("Pack")
@@ -144,45 +132,28 @@ Task("Pack")
 
 Task("Publish")
 	.IsDependentOn("Test")
-	.Does(() =>
+	.DoesForEach(GetSrcProjectFiles(), (project) => 
 	{
-		if(testFailed)
+		var projectDir = System.IO.Path.GetDirectoryName(project.FullPath);
+		var projectName = new System.IO.DirectoryInfo(projectDir).Name;
+		var outputDir = System.IO.Path.Combine(artifactDir, projectName);
+		EnsureDirectoryExists(outputDir);
+
+		Information("Publish {0} to {1}", projectName, outputDir);
+
+		var settings = new DotNetCorePublishSettings
 		{
-			Information("Do not publish because tests failed");
-			return;
-		}
-		var projects = GetFiles("./src/**/*.csproj");
+			OutputDirectory = outputDir,
+			Configuration = "Release"
+		};
 
-		foreach(var project in projects)
-		{
-			var projectDir = System.IO.Path.GetDirectoryName(project.FullPath);
-			var projectName = new System.IO.DirectoryInfo(projectDir).Name;
-			var outputDir = System.IO.Path.Combine(artifactDir, projectName);
-			EnsureDirectoryExists(outputDir);
-
-			Information("Publish {0} to {1}", projectName, outputDir);
-
-			var settings = new DotNetCorePublishSettings
-			{
-				OutputDirectory = outputDir,
-				Configuration = "Release"
-			};
-
-			DotNetCorePublish(project.FullPath, settings);
-		}
+		DotNetCorePublish(project.FullPath, settings);
 	});
 
 
 Task("Build-Container")
 	.IsDependentOn("Publish")
 	.Does(() => {
-		
-		if(testFailed)
-		{
-			Information("Do not build container because tests failed");
-			return;
-		}
-
 		var version = GetProjectVersion();
 		var imageName = GetImageName();
 		var tagVersion = $"{imageName}:{version}-{buildNumber}".ToLower();
@@ -203,13 +174,6 @@ Task("Build-Container")
 Task("Push-Container")
 	.IsDependentOn("Build-Container")
 	.Does(() => {
-
-		if(testFailed)
-		{
-			Information("Do not push container because tests failed");
-			return;
-		}
-
 		var imageName = GetImageName().ToLower();
 		DockerPush(imageName);
 	});

@@ -128,7 +128,6 @@ Task("Test")
         *        Test Docker Container build task
         *************************************************/
         RunPowerShellScript(testSln, @"build.ps1", "-Target Build-Container");
-        RunPowerShellScript(@".\", @"dockerimages.ps1", "");
         DockerRmi(new string[] {"local/caketest", "local/caketest:0.0.0-0"});
 
         /************************************************
