@@ -8,7 +8,7 @@
 # docker login
 # docker push secana/cakeapp
 
-FROM microsoft/dotnet:2.0.5-sdk-2.1.4
-RUN apt update && apt upgrade -y
-RUN apt install dos2unix unzip -y
+FROM microsoft/dotnet:2.1.301-sdk-alpine3.7
+RUN apk update && apk upgrade
+RUN apk add dos2unix unzip bash
 
