@@ -2,6 +2,12 @@
 
 Below are the release notes with the most important changes for the different versions.
 
+## 2.3.1
+
+* Updated to Cake 0.30.0
+* Updated to Cake.Docker 0.9.6
+* Updated to 2.1.3-runtime-alpine3.7
+
 ## 2.3.0
 
 * Updated to Cake 0.28.1
