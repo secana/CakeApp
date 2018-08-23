@@ -8,7 +8,7 @@ SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 TOOLS_DIR=$SCRIPT_DIR/tools
 CAKE_VERSION=0.30.0
 NUGET_URL="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
-CAKE_FOLDER=$TOOLS_DIR/Cake.CoreCLR/$CAKE_VERSION/
+CAKE_FOLDER=$TOOLS_DIR/Cake.Tool/$CAKE_VERSION/tools/netcoreapp2.1/any
 CAKE_DLL=$CAKE_FOLDER/Cake.dll
 ADDIN_PATH=$TOOLS_DIR/Addins
 NUGET_EXE_PATH=$TOOLS_DIR/nuget.exe
@@ -63,11 +63,11 @@ fi
 ###########################################################################
 
 if [ ! -f "$CAKE_DLL" ]; then
-    ZIP_NAME=Cake.CoreCLR.$CAKE_VERSION.zip
+    ZIP_NAME=Cake.Tool.$CAKE_VERSION.zip
 
     # Download the Cake.CoreCLR nuget package and save it as a *.zip file.
     if [ ! -f "$ZIP_NAME" ]; then
-        wget -O $ZIP_NAME https://www.nuget.org/api/v2/package/Cake.CoreCLR/$CAKE_VERSION
+        wget -O $ZIP_NAME https://www.nuget.org/api/v2/package/Cake.Tool/$CAKE_VERSION
     fi
 
     # Unpack the zip file into the tools folder.
@@ -81,6 +81,8 @@ fi
 ###########################################################################
 # RUN BUILD SCRIPT
 ###########################################################################
+
+
 
 # Start Cake
 dotnet "$CAKE_DLL" build.cake --verbosity=$VERBOSITY --configuration=$CONFIGURATION --target=$TARGET $DRYRUN "${SCRIPT_ARGUMENTS[@]}"

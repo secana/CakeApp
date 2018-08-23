@@ -78,10 +78,10 @@ if (!(Test-Path $NugetPath)) {
 ###########################################################################
 
 # Make sure Cake has been installed.
-$CakePath = Join-Path $ToolPath "Cake.CoreCLR.$CakeVersion/Cake.dll"
+$CakePath = Join-Path $ToolPath "Cake.Tool/$CakeVersion/tools/netcoreapp2.1/any/Cake.dll"
 if (!(Test-Path $CakePath)) {
     Write-Host "Installing Cake..."
-    Invoke-Expression "&`"$NugetPath`" install Cake.CoreCLR -Version $CakeVersion -OutputDirectory `"$ToolPath`"" | Out-Null;
+    Invoke-Expression "&`"$NugetPath`" install Cake.Tool -Version $CakeVersion -OutputDirectory `"$ToolPath`"" | Out-Null;
     if ($LASTEXITCODE -ne 0) {
         Throw "An error occured while restoring Cake from NuGet."
     }
