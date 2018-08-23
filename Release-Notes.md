@@ -7,6 +7,10 @@ Below are the release notes with the most important changes for the different ve
 * Updated to Cake 0.30.0
 * Updated to Cake.Docker 0.9.6
 * Updated to 2.1.3-runtime-alpine3.7
+* Updated to Microsoft.NET.Test.Sdk 15.8.0
+* Updated to Moq 4.9.0
+* Updated to xunit 2.4.0
+* Updated to xunit.runner.visualstudio 2.4.0
 
 ## 2.3.0
 
