@@ -112,7 +112,7 @@ Task("Test")
         // *************************************************/
         DotNetNew("caketest", testSln);
         //Test "publish" task
-        RunCakeScript(testSln, @"build.ps1", "-Target publish");
+        RunCakeScript(testSln, "--target=publish");
         var outputDll = System.IO.Path.Combine(testSln, "artifacts", "CakeTest.Console", "CakeTest.Console.dll");
         if(!System.IO.File.Exists(outputDll))
             throw new Exception($"\"Publish\" task of template failed. Could not find {outputDll}");
@@ -120,7 +120,7 @@ Task("Test")
             Information("\"Publish\" task of template ran successfully");
 
         // Test "pack" task
-        RunCakeScript(testSln, @"build.ps1", "-Target pack");
+        RunCakeScript(testSln, "--target=pack");
         var outputPackage = System.IO.Path.Combine(testSln, "artifacts", "CakeTest.Console.0.0.0.nupkg");
         if(!System.IO.File.Exists(outputPackage))
             throw new Exception($"\"Pack\" task of template failed. Could not find {outputPackage}");
@@ -130,7 +130,7 @@ Task("Test")
         /************************************************
         *        Test Docker Container build task
         *************************************************/
-        RunCakeScript(testSln, @"build.ps1", "-Target Build-Container");
+        RunCakeScript(testSln, "--target=Build-Container");
         DockerRmi(new string[] {"local/caketest", "local/caketest:0.0.0-0"});
 
         /************************************************
@@ -181,16 +181,16 @@ Task("Default")
 		Information("To push the NuGet template to nuget.org use: -Target Push --apiKey=\"your nuget api key\"");
 	});
 
-void RunCakeScript(string workDir, string script, string arguments)
+void RunCakeScript(string workDir, string arguments)
 {
-    var cakeArgs = $"\"{System.IO.Path.Combine(workDir, script)} {arguments}\"";
+    arguments = $"cake --verbosity=verbose {arguments}";
     using(var process = StartAndReturnProcess(
-        "dotnet cake", 
-        new ProcessSettings{ Arguments = cakeArgs, WorkingDirectory = workDir }))
+        "dotnet", 
+        new ProcessSettings{ Arguments = arguments, WorkingDirectory = workDir }))
     {
         process.WaitForExit();
         // This should output 0 as valid arguments supplied
-        Information($"Run \"dotnet cake {cakeArgs}\" with Exit code: {process.GetExitCode()}");
+        Information($"Run \"dotnet cake {arguments}\" with Exit code: {process.GetExitCode()}");
     }
 }
 
