@@ -8,7 +8,6 @@
 # docker login
 # docker push secana/cakeapp
 
-FROM microsoft/dotnet:2.1.301-sdk-alpine3.7
-RUN apk update && apk upgrade
-RUN apk add dos2unix unzip bash
-
+FROM microsoft/dotnet:2.1.401-sdk-alpine
+RUN dotnet tool install -g Cake.Tool --version 0.30.0
+ENV PATH="$PATH:/root/.dotnet/tools"
