@@ -2,9 +2,10 @@
 
 Below are the release notes with the most important changes for the different versions.
 
-## 2.3.1
+## 3.0.0
 
 * Updated to Cake 0.30.0
+* Removed bootstrapper `build.ps1` and `build.sh` in favor of the Cake global tool
 * Updated to Cake.Docker 0.9.6
 * Updated to 2.1.3-runtime-alpine3.7
 * Updated to Microsoft.NET.Test.Sdk 15.8.0

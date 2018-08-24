@@ -89,7 +89,7 @@ Task("Test")
         };
 
         // Test "publish" task
-        DockerRun(dockerSettings, "secana/cakeapp", "bin/bash -c \"cd /data && chmod u+x build.sh && dos2unix build.sh && ./build.sh --target publish\"");
+        DockerRun(dockerSettings, "secana/cakeapp", "bin/sh -c \"cd /data && dotnet cake --target=publish\"");
 
         var outputDllLinux = System.IO.Path.Combine(testSlnLinux, "artifacts", "CakeTestLinux.Console", "CakeTestLinux.Console.dll");
         if(!System.IO.File.Exists(outputDllLinux))
@@ -98,7 +98,7 @@ Task("Test")
             Information("\"Publish\" task of Linux template ran successfully");
 
         // Test "pack" task
-        DockerRun(dockerSettings, "secana/cakeapp", "bin/bash -c \"cd /data && chmod u+x build.sh && dos2unix build.sh && ./build.sh --target pack\"");
+        DockerRun(dockerSettings, "secana/cakeapp", "bin/sh -c \"cd /data && dotnet cake --target=pack\"");
 
         var outputPackageLinux = System.IO.Path.Combine(testSlnLinux, "artifacts", "CakeTestLinux.Console.0.0.0.nupkg");
         if(!System.IO.File.Exists(outputPackageLinux))
@@ -112,7 +112,7 @@ Task("Test")
         // *************************************************/
         DotNetNew("caketest", testSln);
         //Test "publish" task
-        RunPowerShellScript(testSln, @"build.ps1", "-Target publish");
+        RunCakeScript(testSln, @"build.ps1", "-Target publish");
         var outputDll = System.IO.Path.Combine(testSln, "artifacts", "CakeTest.Console", "CakeTest.Console.dll");
         if(!System.IO.File.Exists(outputDll))
             throw new Exception($"\"Publish\" task of template failed. Could not find {outputDll}");
@@ -120,7 +120,7 @@ Task("Test")
             Information("\"Publish\" task of template ran successfully");
 
         // Test "pack" task
-        RunPowerShellScript(testSln, @"build.ps1", "-Target pack");
+        RunCakeScript(testSln, @"build.ps1", "-Target pack");
         var outputPackage = System.IO.Path.Combine(testSln, "artifacts", "CakeTest.Console.0.0.0.nupkg");
         if(!System.IO.File.Exists(outputPackage))
             throw new Exception($"\"Pack\" task of template failed. Could not find {outputPackage}");
@@ -130,7 +130,7 @@ Task("Test")
         /************************************************
         *        Test Docker Container build task
         *************************************************/
-        RunPowerShellScript(testSln, @"build.ps1", "-Target Build-Container");
+        RunCakeScript(testSln, @"build.ps1", "-Target Build-Container");
         DockerRmi(new string[] {"local/caketest", "local/caketest:0.0.0-0"});
 
         /************************************************
@@ -181,16 +181,16 @@ Task("Default")
 		Information("To push the NuGet template to nuget.org use: -Target Push --apiKey=\"your nuget api key\"");
 	});
 
-void RunPowerShellScript(string workDir, string script, string arguments)
+void RunCakeScript(string workDir, string script, string arguments)
 {
-    var psCommand = $"\"& {System.IO.Path.Combine(workDir, script)} {arguments}\"";
+    var cakeArgs = $"\"{System.IO.Path.Combine(workDir, script)} {arguments}\"";
     using(var process = StartAndReturnProcess(
-        "powershell", 
-        new ProcessSettings{ Arguments = psCommand, WorkingDirectory = workDir }))
+        "dotnet cake", 
+        new ProcessSettings{ Arguments = cakeArgs, WorkingDirectory = workDir }))
     {
         process.WaitForExit();
         // This should output 0 as valid arguments supplied
-        Information($"Run {script} {arguments} with Exit code: {process.GetExitCode()}");
+        Information($"Run \"dotnet cake {cakeArgs}\" with Exit code: {process.GetExitCode()}");
     }
 }
 
