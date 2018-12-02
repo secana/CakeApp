@@ -1,4 +1,4 @@
-#addin nuget:?package=Cake.Docker&version=0.9.6
+#addin nuget:?package=Cake.Docker&version=0.9.7
 #addin nuget:?package=Cake.Figlet&version=1.1.0
 
 var target          = Argument("target", "Default");
@@ -177,8 +177,8 @@ Task("Default")
 	.Does(() =>
 	{
 		Information("Build and test the whole solution.");
-		Information("To pack (nuget) the application use the cake build argument: -Target Pack");
-		Information("To push the NuGet template to nuget.org use: -Target Push --apiKey=\"your nuget api key\"");
+		Information("To pack (nuget) the application use the cake build argument: dotnet cake --target=pack");
+		Information("To push the NuGet template to nuget.org use: dotnet cake --target=push --apiKey=\"your nuget api key\"");
 	});
 
 void RunCakeScript(string workDir, string arguments)
