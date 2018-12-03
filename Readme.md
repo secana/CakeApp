@@ -28,10 +28,10 @@ This template creates the following structure on your disk, where *CakeApp* is r
 
 ## Prerequisite
 
-Since [Cake 0.30.0 ](https://cakebuild.net/blog/2018/08/cake-v0.30.0-released) the script runner is available as a [.Net Core Global Tool](https://docs.microsoft.com/en-us/dotnet/core/tools/global-tools). This make the bootstrap scripts `build.ps1` and `build.sh` obsolete.
+Since [Cake 0.30.1 ](https://cakebuild.net/blog/2018/08/cake-v0.30.1-released) the script runner is available as a [.Net Core Global Tool](https://docs.microsoft.com/en-us/dotnet/core/tools/global-tools). This make the bootstrap scripts `build.ps1` and `build.sh` obsolete.
 
 * Make sure you have at least the .Net Core SDK version 2.1.400 installed
-* Install the Cake global tool with:  `dotnet tool install -g Cake.Tool --version 0.30.0`
+* Install the Cake global tool with:  `dotnet tool install -g Cake.Tool --version 0.30.1`
 
 ## Installation of Template
 
