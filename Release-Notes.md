@@ -2,6 +2,12 @@
 
 Below are the release notes with the most important changes for the different versions.
 
+## 3.0.2
+
+* Updated Cake.Figlet to 1.2.0
+* Updated Cake.Docker to 0.9.9
+* Updated to "mcr.microsoft.com/dotnet/core/runtime:2.2-alpine3.9" as runtime image
+
 ## 3.0.0
 
 * Updated to Cake 0.30.0

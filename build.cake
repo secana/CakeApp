@@ -1,5 +1,5 @@
-#addin nuget:?package=Cake.Docker&version=0.9.7
-#addin nuget:?package=Cake.Figlet&version=1.1.0
+#addin nuget:?package=Cake.Docker&version=0.9.9
+#addin nuget:?package=Cake.Figlet&version=1.2.0
 
 var target          = Argument("target", "Default");
 var solutionDir     = System.IO.Directory.GetCurrentDirectory();
