@@ -75,7 +75,7 @@ Task("Test")
     .IsDependentOn("InstallTestVersion")
     .Does(() => {
         /************************************************
-        *             Linux build.sh test
+        *             Linux test
         *************************************************/
         DotNetNew("caketest", testSlnLinux);
 
@@ -108,7 +108,7 @@ Task("Test")
 
         
         // /************************************************
-        // *             Windows build.ps1 test
+        // *             Windows test
         // *************************************************/
         DotNetNew("caketest", testSln);
         //Test "publish" task
