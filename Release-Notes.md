@@ -2,6 +2,12 @@
 
 Below are the release notes with the most important changes for the different versions.
 
+## 3.1.0
+
+* Updated to .NET Core 3.0
+* Updated all dependencies
+* Updated cake-tool to 0.35.0
+
 ## 3.0.2
 
 * Updated Cake.Figlet to 1.2.0
