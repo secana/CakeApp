@@ -3,3 +3,4 @@
 /tools
 
 *.sh text eol=lf
+nuget.exe

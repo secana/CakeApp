@@ -42,8 +42,21 @@ Task("PrepareTestNuSpec")
         CopyFile("CakeApp.nuspec", testSpecPath);
     });
 
-Task("PrepareTestTemplate")
+Task("DownloadNuget")
     .IsDependentOn("PrepareTestNuSpec")
+    .Does(() =>
+    {
+        using(var wc = new System.Net.WebClient())
+        {
+            wc.DownloadFile("https://dist.nuget.org/win-x86-commandline/latest/nuget.exe", "nuget.exe");
+        }
+        var path = System.Environment.GetEnvironmentVariable("Path");
+        path += $";{solutionDir}";
+        System.Environment.SetEnvironmentVariable("Path", path);
+    });
+
+Task("PrepareTestTemplate")
+    .IsDependentOn("DownloadNuget")
     .Does(() => {
         var testTemplatePath = System.IO.Path.Combine(testDirectory, "CakeApp");
         CopyDirectory("CakeApp", testTemplatePath);
