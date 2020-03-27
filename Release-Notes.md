@@ -2,6 +2,12 @@
 
 Below are the release notes with the most important changes for the different versions.
 
+## 3.2.0
+
+* Updated to .NET Core 3.1 LTS
+* Updated all dependencies
+* Updated cake-tool to 0.37.0
+
 ## 3.1.0
 
 * Updated to .NET Core 3.0

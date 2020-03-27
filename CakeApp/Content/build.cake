@@ -1,4 +1,4 @@
-#addin nuget:?package=Cake.Docker&version=0.10.1
+#addin nuget:?package=Cake.Docker&version=0.11.0
 #addin nuget:?package=Cake.Figlet&version=1.3.1
 
 var target = Argument("target", "Default");

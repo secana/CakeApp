@@ -2,14 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CakeApp</id>
-        <version>3.1.0</version>
+        <version>3.2.0</version>
         <title>CakeApp</title>
         <authors>Stefan Hausotte</authors>
         <projectUrl>https://github.com/secana/CakeApp</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <licenseUrl>https://github.com/secana/CakeApp/blob/master/LICENSE</licenseUrl>
         <description>"dotnet new" solution template to create a core console app based on the Cake build system.</description>
-        <copyright>2017-2019 @ Stefan Hausotte</copyright>
+        <copyright>2017 @ Stefan Hausotte</copyright>
         <tags>Cake build dotnet new core</tags>
         <iconUrl>https://raw.githubusercontent.com/cake-build/graphics/master/png/cake-small.png</iconUrl>
         <packageTypes>

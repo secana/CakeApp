@@ -8,6 +8,6 @@
 # docker login
 # docker push secana/cakeapp
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0-alpine
-RUN dotnet tool install -g Cake.Tool --version 0.35.0
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
+RUN dotnet tool install -g Cake.Tool --version 0.37.0
 ENV PATH="$PATH:/root/.dotnet/tools"
